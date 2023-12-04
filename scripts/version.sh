@@ -40,11 +40,11 @@ function do_it() {
   yq -i ".version = \"$NEW_VERSION\"" $META_FILE
 
   echo "Version to be bumped: $NEW_VERSION. Preparing to make new tag"
-  git commit -am "MAKING VERSION"
-  git tag -a v$NEW_VERSION -m "MAKING VERSION"
-
   echo "Removing changesets"
   rm -rf $CHANGESET_FOLDER/*.txt
+  
+  git commit -am "MAKING VERSION"
+  git tag -a v$NEW_VERSION -m "MAKING VERSION"
 }
 
 do_it "$@"
