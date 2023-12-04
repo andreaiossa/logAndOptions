@@ -37,9 +37,13 @@ function do_it() {
   yq -i ".$MODE = $NEW_VALUE" $META_FILE
 
   NEW_VERSION=$(yq .major $META_FILE).$(yq .minor $META_FILE).$(yq .patch $META_FILE)
-  echo $NEW_VERSION
+  yq -i ".version = \"$NEW_VERSION\"" $META_FILE
 
-  # yq -i ".version = " $META_FILE
+  echo "Version to be bumped: $NEW_VERSION. Preparing to make new tag"
+  git tag -a v$NEW_VERSION -m "MAKING VERSION"
+
+  echo "Removing changesets"
+  rm -rf $CHANGESET_FOLDER/*.txt
 }
 
 do_it "$@"
